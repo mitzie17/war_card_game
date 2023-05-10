@@ -17,9 +17,9 @@ class Player {
 }
 
 class Card {
-    constructor(suit, rank, value) {
+    constructor(suit, value) {
         this.suit = suit
-        this.rank = rank
+        //this.rank = rank
         this.value = value
     }
 }
@@ -27,20 +27,45 @@ class Card {
 class Deck {
     constructor() {
         this.deck = [ ]
-        this.suits = ['Diamonds', 'Clubs', 'Hearts', 'Spades']
-        this.ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
-        this.values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+
+        const suits = ['Diamonds', 'Clubs', 'Hearts', 'Spades']
+        //this.ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
+        const values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+
+// create 52 cards, each with a suit(i) and value(j)
+// push each card to the deck array
+        for (let i = 0; i < suits.length; i++) {
+            //console.log(i)
+            for (let j = 0; j < values.length; j++) {
+                //console.log(j + 2)
+                this.deck.push(new Card(suits[i], values[j] + 1))
+                
+            }
+        }
     }
 
-    createDeck() {
+    
 
+    shuffleDeck() {
+
+        for (let i = this.deck.length - 1; i > 0; i--) {
+            // the randomIndex variable returns array 52 to 2
+            let randomIndex = Math.floor(Math.random() * (i + 1))
+            // the currentIndex variable returns an array(deck) of cards, each with an assigned suit and value
+            let currentIndex = this.deck[i]
+            // assigns each card an index between 2-52
+            this.deck[i] = this.deck[randomIndex]
+            this.deck[randomIndex] = currentIndex  
+        }
+        // returns deck of shuffled cards, each with a suit and a value
+        return this.deck
     }
 
-    shuffle() {
-
-    }
 }
 
 class Game {
 
 }
+
+let newDeck = new Deck()
+console.log(newDeck.shuffleDeck())
