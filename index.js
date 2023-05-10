@@ -32,19 +32,16 @@ class Deck {
         //this.ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
         const values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
-// create 52 cards, each with a suit(i) and value(j)
-// push each card to the deck array
+        // create 52 cards, each with a suit(i) and value(j)
+        // push each card to the deck array
         for (let i = 0; i < suits.length; i++) {
             //console.log(i)
             for (let j = 0; j < values.length; j++) {
                 //console.log(j + 2)
                 this.deck.push(new Card(suits[i], values[j] + 1))
-                
             }
         }
     }
-
-    
 
     shuffleDeck() {
 
@@ -61,11 +58,22 @@ class Deck {
         return this.deck
     }
 
+    splitDeck(playerOne, playerTwo) {
+        // gives the first half of shuffled deck to playerOne
+        playerOne.hand = [...this.deck.slice(0, 26)]
+        // gives the second half of shuffled deck to playerTwo
+        playerTwo.hand = [...this.deck.slice(26, 52)]
+    }
+
 }
 
 class Game {
+    constructor() {
+        this.players = [ ]
+    }
 
 }
 
 let newDeck = new Deck()
-console.log(newDeck.shuffleDeck())
+let shuffled = newDeck.shuffleDeck()
+console.log(shuffled.slice(26, 52))
