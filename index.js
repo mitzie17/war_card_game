@@ -12,7 +12,7 @@ class Player {
     constructor(name) {
         this.name = name
         this.hand = [ ]
-        this.score = [ ]
+        this.score = 0
     }
 }
 
@@ -72,8 +72,51 @@ class Game {
         this.players = [ ]
     }
 
+    createPlayer(player) {
+        let playerName = prompt(`Enter name of first player: ${player}.`, `Player ${player}`)
+
+        while (playerName == '' || playerName === null) {
+            playerName = prompt(`Player must have a name.`)
+        }
+        this.players.push(new Player(playerName))
+    }
+
+    startGame() {
+
+        this.createPlayer('One')
+        this.createPlayer('Two')
+
+        let newDeck = new Deck;
+        newDeck.shuffleDeck();
+        newDeck.splitDeck(this.players[0], this.players[1]);
+        this.playCards(this.players[0], this.players[1])
+        
+    }
+
+    playCards(playerOne, playerTwo) {
+
+        for (let i = 0; i < this.players[0].hand.length; i++) {
+            let playerOneCard = playerOne.hand[i]
+            let playerTwocard = playerTwo.hand[i]
+
+            if (playerOneCard.value > playerTwocard.value) {
+                console.log(`${playerOne.name} wins!`);
+                playerOne.score++;
+            } else if (playerOneCard.value < playerTwocard.value) {
+                console.log(`${playerTwo.name} wins!`);
+                playerTwo.score++
+            } else if (playerOneCard.value === playerTwocard.value) {
+                console.log("It's a tie! No point awarded.")
+            }
+        }
+    }
+
+
 }
 
-let newDeck = new Deck()
-let shuffled = newDeck.shuffleDeck()
-console.log(shuffled.slice(26, 52))
+//let newDeck = new Deck()
+//let shuffled = newDeck.shuffleDeck()
+//console.log(shuffled.slice(26, 52))
+
+let startGame = new Game;
+startGame.startGame()
