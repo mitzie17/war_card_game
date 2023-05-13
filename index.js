@@ -59,9 +59,9 @@ class Deck {
     }
 
     splitDeck(playerOne, playerTwo) {
-        // gives the first half of shuffled deck to playerOne
+        // "hands" the first half of shuffled deck to playerOne
         playerOne.hand = [...this.deck.slice(0, 26)]
-        // gives the second half of shuffled deck to playerTwo
+        // "hands" the second half of shuffled deck to playerTwo
         playerTwo.hand = [...this.deck.slice(26, 52)]
     }
 
@@ -82,23 +82,24 @@ class Game {
     }
 
     startGame() {
-    
+    // this function is called to start the game application
         this.createPlayer('one')
         this.createPlayer('two')
-
+    // automatically start a new deck, shuffles the deck, and splits the shuffled deck between two players
         let newDeck = new Deck;
         newDeck.shuffleDeck();
         newDeck.splitDeck(this.players[0], this.players[1]);
+    // here the play method is called to actually start the game
         this.play(this.players[0], this.players[1])
         
     }
-
+    // defines logic of each play
     play(playerOne, playerTwo) {
-
+        // iterates through each player's hand and saves each card in the variables playerOneCard and playerTwoCard, respectively
         for (let i = 0; i < this.players[0].hand.length; i++) {
             let playerOneCard = playerOne.hand[i]
             let playerTwocard = playerTwo.hand[i]
-
+        // compares the value of each card to determine who wins each round and logs the score of both players
             if (playerOneCard.value > playerTwocard.value) {
                 console.log(`${playerOne.name} wins!`);
                 playerOne.score++
@@ -115,7 +116,7 @@ class Game {
                 console.log("It's a tie! No point awarded.")
             }
         }
-
+        // compares the overall score to determine the winner of the game
         if (playerOne.score > playerTwo.score) {
             console.log(`${playerOne.name} wins the game!
             ${playerOne.name}'s Final Score: ${playerOne.score}
