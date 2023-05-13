@@ -19,7 +19,7 @@ class Player {
 class Card {
     constructor(suit, value) {
         this.suit = suit
-        //this.rank = rank
+        //this.rank = rank?
         this.value = value
     }
 }
@@ -29,8 +29,8 @@ class Deck {
         this.deck = [ ]
 
         const suits = ['Diamonds', 'Clubs', 'Hearts', 'Spades']
-        //this.ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
-        const values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+        //card ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
+        const values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
         // create 52 cards, each with a suit(i) and value(j)
         // push each card to the deck array
@@ -73,7 +73,7 @@ class Game {
     }
 
     createPlayer(player) {
-        let playerName = prompt(`Enter name of first player: ${player}.`, `Player ${player}`)
+        let playerName = prompt(`Enter name of player ${player}: `)
 
         while (playerName == '' || playerName === null) {
             playerName = prompt(`Player must have a name.`)
@@ -82,18 +82,18 @@ class Game {
     }
 
     startGame() {
-
-        this.createPlayer('One')
-        this.createPlayer('Two')
+    
+        this.createPlayer('one')
+        this.createPlayer('two')
 
         let newDeck = new Deck;
         newDeck.shuffleDeck();
         newDeck.splitDeck(this.players[0], this.players[1]);
-        this.playCards(this.players[0], this.players[1])
+        this.play(this.players[0], this.players[1])
         
     }
 
-    playCards(playerOne, playerTwo) {
+    play(playerOne, playerTwo) {
 
         for (let i = 0; i < this.players[0].hand.length; i++) {
             let playerOneCard = playerOne.hand[i]
@@ -101,13 +101,33 @@ class Game {
 
             if (playerOneCard.value > playerTwocard.value) {
                 console.log(`${playerOne.name} wins!`);
-                playerOne.score++;
+                playerOne.score++
+                console.log(`
+                ${playerOne.name}'s Score: ${playerOne.score}
+                ${playerTwo.name}'s Score: ${playerTwo.score}`)
             } else if (playerOneCard.value < playerTwocard.value) {
                 console.log(`${playerTwo.name} wins!`);
                 playerTwo.score++
+                console.log(`
+                ${playerOne.name}'s Score: ${playerOne.score}
+                ${playerTwo.name}'s Score: ${playerTwo.score}`)
             } else if (playerOneCard.value === playerTwocard.value) {
                 console.log("It's a tie! No point awarded.")
             }
+        }
+
+        if (playerOne.score > playerTwo.score) {
+            console.log(`${playerOne.name} wins the game!
+            ${playerOne.name}'s Final Score: ${playerOne.score}
+            ${playerTwo.name}'s Final Score: ${playerTwo.score}`)
+        } else if (playerOne.score < playerTwo.score) {
+            console.log(`${playerTwo.name} wins the game!
+            ${playerOne.name}'s Final Score: ${playerOne.score}
+            ${playerTwo.name}'s Final Score: ${playerTwo.score}`)
+        } else if (playerOne.score === playerTwo.score) {
+            console.log(`No one wins the game!
+            ${playerOne.name}'s Final Score: ${playerOne.score}
+            ${playerTwo.name}'s Final Score: ${playerTwo.score}`)
         }
     }
 
